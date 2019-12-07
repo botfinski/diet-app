@@ -6,9 +6,11 @@ const button = props => (
     type="button"
     className={props.showButton ? "Button visible" : "Button"}
     onClick={props.clicked}
-    disabled={props.disabled}>
-      {props.textContent}
+    data-type={props.buttonType}
+    disabled={props.disabled}
+  >
+    {props.textContent}
   </button>
-)
+);
 
 export default button;

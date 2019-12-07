@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Header from "../../Components/Header/Header";
 import DataDisplay from "../../Components/DataDisplay/DataDisplay";
 import Chart from "../../Components/Chart/Chart";
-// import AddButton from '../../Components/AddButton/AddButton';
+import Button from "../../Components/Button/Button";
 import Backdrop from "../../Components/Backdrop/Backdrop";
 import Modal from "../../Components/Modal/Modal";
 
@@ -62,7 +62,7 @@ class DietContainer extends Component {
           <Header menuClicked={this.handleMenuClicked} menuOpened={this.state.menuOpened} />
           <DataDisplay nutritionData={this.state.nutritionData} userData={this.props.data.appData.userData} />
           <Chart />
-          {/* <AddButton addClicked={this.handleAddClicked} /> */}
+          <Button clicked={this.handleAddClicked} textContent={"Dodaj"} buttonType="open-modal" />
           <Backdrop showBackdrop={this.state.modalOpened}>
             <Modal
               modalOpened={this.state.modalOpened}
