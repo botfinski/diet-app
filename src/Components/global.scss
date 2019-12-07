@@ -1,0 +1,15 @@
+.Flex {
+  display: flex;
+}
+
+.Flex-50 {
+  & > * {
+    width: 50%;
+  }
+}
+
+.Flex-25 {
+  & > * {
+    width: 25%;
+  }
+}

@@ -1,0 +1,30 @@
+@import '../global.scss';
+
+.Modal {
+  display: none;
+  position: absolute;
+  z-index: 4;
+  top: 20px;
+  left: 20px;
+  background: white;
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+
+  &.visible {
+    display: block;
+  }
+
+  form {
+    padding: 10px;
+  }
+
+  &-Buttons-Container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+    .Button {
+      min-height: 45px;
+    }
+  }
+}

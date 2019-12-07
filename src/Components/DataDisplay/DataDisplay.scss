@@ -1,0 +1,21 @@
+table {
+  width: 100%;
+  text-align: center;
+
+  tbody {
+    tr {
+      display: flex;
+      width:100%;
+      justify-content: space-evenly;
+  
+      th, td {
+        span:before {
+          content: '';
+          display: block;
+        }
+      }
+    }
+  }
+
+  
+}
