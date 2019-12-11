@@ -1,10 +1,15 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import Button from "../Button/Button";
+
 
 const header = props => (
   <header className="Header">
     <img src="#" alt="Logo"/>
-    <button onClick={props.menuClicked}>MENU</button>
+    <Button 
+        textContent="MENU"  
+        clicked={props.clicked} 
+        action="toggle-menu" />
   </header>
 );
 

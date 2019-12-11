@@ -16,6 +16,11 @@
 
   form {
     padding: 10px;
+
+    input {
+      width: 100%;
+      min-height: 45px;
+    }
   }
 
   &-Buttons-Container {

@@ -6,7 +6,7 @@ const button = props => (
     type="button"
     className={props.showButton ? "Button visible" : "Button"}
     onClick={props.clicked}
-    data-type={props.buttonType}
+    data-action={props.action}
     disabled={props.disabled}
   >
     {props.textContent}

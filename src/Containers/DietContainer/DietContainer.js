@@ -27,30 +27,49 @@ class DietContainer extends Component {
     //   );
   }
 
-  handleMenuClicked = this.handleMenuClicked.bind(this);
-  handleMenuClicked() {
-    this.setState(prevState => ({
-      menuOpened: !prevState.menuOpened
-    }));
 
-    console.log("menu opened: " + !this.state.menuOpened);
+  addNutrition = this.addNutrition.bind(this);
+  addNutrition(data) {
+    console.log(data);
   }
 
-  handleAddClicked = this.handleAddClicked.bind(this);
-  handleAddClicked() {
+  toggleModal = this.toggleModal.bind(this);
+  toggleModal() {
     this.setState(prevState => ({
       modalOpened: !prevState.modalOpened
     }));
-
-    console.log("modal opened: " + !this.state.modalOpened);
   }
 
-  handleAddNutrition = this.handleAddNutrition.bind(this);
-  handleAddNutrition() {
-    this.setState({
-      lastUpdated: new Date()
-    });
-    console.log(new Date());
+  toggleMenu = this.toggleMenu.bind(this);
+  toggleMenu() {
+    this.setState(prevState => ({
+      menuOpened: !prevState.menuOpened
+    }));
+    console.log("menu opened: " + !this.state.menuOpened);
+  }
+
+  handleButtonClicks = this.handleButtonClicks.bind(this);
+  handleButtonClicks(e) {
+
+    if(e.target.nodeName === 'BUTTON') {
+      let action
+
+      if (e.target.dataset.action.search('-') > 0) {
+        let names = e.target.dataset.action.split('-');
+        names[1] = names[1].charAt(0).toUpperCase() + names[1].slice(1);
+          
+        action = names.join('');
+      } else {
+        action = e.target.dataset.action;
+      }
+      
+      if(typeof this[action] !== 'undefined') {
+        this[action](e);
+      } else {
+        console.error('No function to call: %c' + action, 'background: #222; color: #ff0000')
+        return;
+      }
+    }
   }
 
   render() {
@@ -59,15 +78,22 @@ class DietContainer extends Component {
     } else {
       return (
         <>
-          <Header menuClicked={this.handleMenuClicked} menuOpened={this.state.menuOpened} />
-          <DataDisplay nutritionData={this.state.nutritionData} userData={this.props.data.appData.userData} />
+          <Header 
+            clicked={this.handleButtonClicks} 
+            menuOpened={this.state.menuOpened} />
+          <DataDisplay
+            parentCallback = {this.callbackFunction}
+            nutritionData={this.state.nutritionData} 
+            userData={this.props.data.appData.userData} />
           <Chart />
-          <Button clicked={this.handleAddClicked} textContent={"Dodaj"} buttonType="open-modal" />
+          <Button
+            clicked={this.handleButtonClicks}
+            textContent={"Dodaj"}
+            action="toggle-modal" />
           <Backdrop showBackdrop={this.state.modalOpened}>
             <Modal
               modalOpened={this.state.modalOpened}
-              closeClicked={this.handleAddClicked}
-              addClicked={this.handleAddNutrition}
+              clicked={this.handleButtonClicks}
             />
           </Backdrop>
         </>
