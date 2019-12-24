@@ -21,7 +21,9 @@ class App extends Component {
   };
 
   render() {
-    return <DietContainer data={this.state} />;
+    return <DietContainer 
+      // data={this.state}
+    />;
   }
 }
 

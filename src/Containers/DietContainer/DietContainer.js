@@ -1,22 +1,20 @@
 import React, { Component } from "react";
-import Header from "../../Components/Header/Header";
-import DataDisplay from "../../Components/DataDisplay/DataDisplay";
-import Chart from "../../Components/Chart/Chart";
-import Button from "../../Components/Button/Button";
-import Backdrop from "../../Components/Backdrop/Backdrop";
-import Modal from "../../Components/Modal/Modal";
+import Diet from "../../Components/Diet/Diet";
 
 class DietContainer extends Component {
   state = {
     menuOpened: false,
     modalOpened: false,
-    nutritionData: {},
+    // nutritionData: {},
+    nutritionsNames: ["kcal", "protein", "carbohydrates", "sugar", "fat", "saturated", "salt"],
     dataLoaded: true,
-    nutritions: {},
-    lastUpdated: null
+    foodList: {},
+    lastUpdated: null,
+    total: {}
   };
 
   componentDidMount() {
+    // console.log(newTotal);
     // fetch("data/nutritionData.json")
     //   .then(response => response.json())
     //   .then(json =>
@@ -25,16 +23,141 @@ class DietContainer extends Component {
     //       nutritionData: json
     //     })
     //   );
+    // let storedFoodData = localStorage.getItem('food');
+    // let newfoodList = {...this.state.foodList, ...JSON.parse(storedFoodData)};
+    // this.setState({foodList: newfoodList});
+    // let a = {
+    //   name: "aa",
+    //   kcal: 111,
+    //   protein: 111,
+    //   carbohydrates: 111,
+    //   sugar: 111,
+    //   fat: 111,
+    //   saturated: 111,
+    //   salt: 111,
+    //   date: 1576940375062
+    // };
+    // let b = {
+    //   name: "bb",
+    //   kcal: 222,
+    //   protein: 222,
+    //   carbohydrates: 222,
+    //   sugar: 222,
+    //   fat: 222,
+    //   saturated: 222,
+    //   salt: 222,
+    //   date: 1576940375062
+    // };
+    // function sumObjectsByKey(...objs) {
+    //   return objs.reduce((a, b) => {
+    //     for (let k in b) {
+    //       if (typeof b[k] === "number") {
+    //         if (b.hasOwnProperty(k)) a[k] = (a[k] || 0) + b[k];
+    //       }
+    //     }
+    //     return a;
+    //   }, {});
+    // }
+    // console.log(sumObjectsByKey(a, b));
   }
-
 
   addNutrition = this.addNutrition.bind(this);
   addNutrition(data) {
-    console.log(data);
+    this.toggleModal();
+
+    let newFood = { ...data, date: Date.now() },
+      newfoodList = { ...this.state.foodList },
+      newTotal = { ...this.state.total },
+      prop = Date.now().toString();
+    newfoodList[prop] = newFood;
+
+    // console.log(...this.state.foodList);
+    // console.log(...this.state.total, ...this.state.foodList);
+
+    function isEmpty(obj) {
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key)) return false;
+      }
+      return true;
+    }
+
+    // if (isEmpty(newTotal)) {
+    //   console.log("total empty");
+    //   // console.log(this.state.foodList);
+    //   // this.setState({total: ...this.state.foodList});
+    //   newTotal = { ...newfoodList };
+    // } else {
+    //   console.log("total not empty");
+    //   let s = { ...newTotal };
+    //   // console.log(sumObjectsByKey(newTotal, newfoodList));
+
+    //   newTotal = sumObjectsByKey(s);
+    // }
+
+    // let today = new Date();
+    // let dd = String(today.getDate()).padStart(2, '0');
+    // let mm = String(today.getMonth() + 1).padStart(2, '0');
+    // let yyyy = today.getFullYear();
+
+    // today = mm + '/' + dd + '/' + yyyy;
+
+    // console.log(newFood);
+
+    // localStorage.setItem('food', JSON.stringify(newfoodList));
+
+    let a = {
+      name: "aa",
+      kcal: 3123123,
+      protein: 1231123,
+      carbohydrates: 123123,
+      sugar: 123123123,
+      fat: 12312,
+      saturated: 313,
+      salt: 123,
+      date: 1576940375062
+    };
+    let b = {
+      name: "bb",
+      kcal: 3123123,
+      protein: 1231123,
+      carbohydrates: 123123,
+      sugar: 123123123,
+      fat: 12312,
+      saturated: 313,
+      salt: 123,
+      date: 1576940375062
+    };
+
+    function sumObjectsByKey(...objs) {
+      return objs.reduce((a, b) => {
+        for (let k in b) {
+          if (typeof b[k] === "number") {
+            if (b.hasOwnProperty(k)) a[k] = (a[k] || 0) + b[k];
+          }
+        }
+        return a;
+      }, {});
+    }
+
+    console.log(sumObjectsByKey(newfoodList));
+    // console.log(sumObjectsByKey);
+    // console.log(this.state.total);
+    // console.log(this.state.foodList);
+
+    // console.log(newTotal);
+
+    this.setState({
+      foodList: newfoodList,
+      total: newTotal
+    });
   }
 
   toggleModal = this.toggleModal.bind(this);
-  toggleModal() {
+  toggleModal(e) {
+    let form = document.querySelector("#add-food-form");
+
+    form.reset();
+
     this.setState(prevState => ({
       modalOpened: !prevState.modalOpened
     }));
@@ -50,23 +173,22 @@ class DietContainer extends Component {
 
   handleButtonClicks = this.handleButtonClicks.bind(this);
   handleButtonClicks(e) {
+    if (e.target.nodeName === "BUTTON") {
+      let action;
 
-    if(e.target.nodeName === 'BUTTON') {
-      let action
-
-      if (e.target.dataset.action.search('-') > 0) {
-        let names = e.target.dataset.action.split('-');
+      if (e.target.dataset.action.search("-") > 0) {
+        let names = e.target.dataset.action.split("-");
         names[1] = names[1].charAt(0).toUpperCase() + names[1].slice(1);
-          
-        action = names.join('');
+
+        action = names.join("");
       } else {
         action = e.target.dataset.action;
       }
-      
-      if(typeof this[action] !== 'undefined') {
+
+      if (typeof this[action] !== "undefined") {
         this[action](e);
       } else {
-        console.error('No function to call: %c' + action, 'background: #222; color: #ff0000')
+        console.error("No function to call: %c" + action, "background: #222; color: #ff0000");
         return;
       }
     }
@@ -74,29 +196,20 @@ class DietContainer extends Component {
 
   render() {
     if (!this.state.dataLoaded) {
-      return <p>Loading user data...</p>;
+      return <p>Loading data...</p>;
     } else {
       return (
-        <>
-          <Header 
-            clicked={this.handleButtonClicks} 
-            menuOpened={this.state.menuOpened} />
-          <DataDisplay
-            parentCallback = {this.callbackFunction}
-            nutritionData={this.state.nutritionData} 
-            userData={this.props.data.appData.userData} />
-          <Chart />
-          <Button
-            clicked={this.handleButtonClicks}
-            textContent={"Dodaj"}
-            action="toggle-modal" />
-          <Backdrop showBackdrop={this.state.modalOpened}>
-            <Modal
-              modalOpened={this.state.modalOpened}
-              clicked={this.handleButtonClicks}
-            />
-          </Backdrop>
-        </>
+        <Diet
+          handleButtonClicks={this.handleButtonClicks}
+          menuOpened={this.state.menuOpened}
+          // nutritionData={this.state.nutritionData}
+          // userData={this.props.data.appData.userData}
+          nutritionsNames={this.state.nutritionsNames}
+          modalOpened={this.state.modalOpened}
+          addNutrition={this.addNutrition}
+          foodList={this.state.foodList}
+          data={this.state.total}
+        />
       );
     }
   }

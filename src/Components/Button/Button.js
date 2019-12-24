@@ -1,10 +1,10 @@
 import React from "react";
-// import "./Button.scss";
+import "./Button.scss";
 
 const button = props => (
   <button
     type="button"
-    className={props.showButton ? "Button visible" : "Button"}
+    className={props.className ? "Button " + props.className : "Button"}
     onClick={props.clicked}
     data-action={props.action}
     disabled={props.disabled}
