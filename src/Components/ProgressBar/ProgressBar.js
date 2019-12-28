@@ -5,10 +5,6 @@ import "./ProgressBar.scss";
 const progressBar = props => {
   // console.log(props);
 
-  // Object.values(props).forEach(value => {
-  //   console.log(value);
-  // });
-
   return (
     <>
       <br />
