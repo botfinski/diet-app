@@ -8,9 +8,9 @@ const progressBar = props => {
   return (
     <>
       <br />
-      <label htmlFor={props.name}>{props.name}</label>
+      <label htmlFor={props.name}>{props.name} {props.value}</label>
       <br />
-      <progress id={props.name} max="100" value="70"></progress>
+      <progress id={props.name} max="100" value={props.value}></progress>
     </>
   );
 };

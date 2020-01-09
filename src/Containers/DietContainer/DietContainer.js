@@ -10,7 +10,15 @@ class DietContainer extends Component {
     dataLoaded: true,
     foodList: {},
     lastUpdated: null,
-    total: {}
+    total: {
+      kcal: 10,
+      protein: 0,
+      carbohydrates: 0,
+      sugar: 0,
+      fat: 0,
+      saturated: 0,
+      salt: 0
+    }
   };
 
   componentDidMount() {
@@ -69,64 +77,19 @@ class DietContainer extends Component {
       newfoodList = { ...this.state.foodList },
       newTotal = { ...this.state.total },
       prop = Date.now().toString();
-    newfoodList[prop] = newFood;
+      newfoodList[prop] = newFood;
 
-    // console.log(...this.state.foodList);
-    // console.log(...this.state.total, ...this.state.foodList);
+    console.log(newfoodList);
+    console.log(newTotal);
 
-    function isEmpty(obj) {
-      for (var key in obj) {
-        if (obj.hasOwnProperty(key)) return false;
-      }
-      return true;
-    }
 
-    // if (isEmpty(newTotal)) {
-    //   console.log("total empty");
-    //   // console.log(this.state.foodList);
-    //   // this.setState({total: ...this.state.foodList});
-    //   newTotal = { ...newfoodList };
-    // } else {
-    //   console.log("total not empty");
-    //   let s = { ...newTotal };
-    //   // console.log(sumObjectsByKey(newTotal, newfoodList));
 
-    //   newTotal = sumObjectsByKey(s);
+    // function isEmpty(obj) {
+    //   for (var key in obj) {
+    //     if (obj.hasOwnProperty(key)) return false;
+    //   }
+    //   return true;
     // }
-
-    // let today = new Date();
-    // let dd = String(today.getDate()).padStart(2, '0');
-    // let mm = String(today.getMonth() + 1).padStart(2, '0');
-    // let yyyy = today.getFullYear();
-
-    // today = mm + '/' + dd + '/' + yyyy;
-
-    // console.log(newFood);
-
-    // localStorage.setItem('food', JSON.stringify(newfoodList));
-
-    let a = {
-      name: "aa",
-      kcal: 3123123,
-      protein: 1231123,
-      carbohydrates: 123123,
-      sugar: 123123123,
-      fat: 12312,
-      saturated: 313,
-      salt: 123,
-      date: 1576940375062
-    };
-    let b = {
-      name: "bb",
-      kcal: 3123123,
-      protein: 1231123,
-      carbohydrates: 123123,
-      sugar: 123123123,
-      fat: 12312,
-      saturated: 313,
-      salt: 123,
-      date: 1576940375062
-    };
 
     function sumObjectsByKey(...objs) {
       return objs.reduce((a, b) => {
@@ -139,7 +102,7 @@ class DietContainer extends Component {
       }, {});
     }
 
-    console.log(sumObjectsByKey(newfoodList));
+    console.log(sumObjectsByKey(newfoodList, newTotal));
     // console.log(sumObjectsByKey);
     // console.log(this.state.total);
     // console.log(this.state.foodList);
@@ -203,12 +166,12 @@ class DietContainer extends Component {
           handleButtonClicks={this.handleButtonClicks}
           menuOpened={this.state.menuOpened}
           // nutritionData={this.state.nutritionData}
-          // userData={this.props.data.appData.userData}
+          userData={this.props.data.userData}
           nutritionsNames={this.state.nutritionsNames}
           modalOpened={this.state.modalOpened}
           addNutrition={this.addNutrition}
           foodList={this.state.foodList}
-          data={this.state.total}
+          total={this.state.total}
         />
       );
     }

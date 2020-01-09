@@ -99,7 +99,7 @@ class Modal extends Component {
   render() {
     return (
       <div className={this.props.modalOpened ? "Modal visible" : "Modal"}>
-        <form id="add-food-form" onChange={this.handleForm}>
+        <form id="add-food-form" onChange={this.handleForm} onSubmit={this.handleForm}>
           <label htmlFor="name">co tam zajadasz?</label>
           <br />
           <input type="text" id="name" placeholder="wpisz swe danie" autoComplete="off" />

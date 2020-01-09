@@ -4,12 +4,12 @@ import "./DataDisplay.scss";
 import ProgressBar from "../ProgressBar/ProgressBar";
 
 const dataDisplay = props => {
-  console.log(props);
+  // console.log(props);
 
   return (
     <div className="Data-Display">
       {props.nutritionsNames.map(name => {
-        return <ProgressBar name={name} data={props.data} key={name} />;
+        return <ProgressBar name={name} data={props.userData.nutritions} key={name} value={props.total[name]} />;
       })}
     </div>
   );

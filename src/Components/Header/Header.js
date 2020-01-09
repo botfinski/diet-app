@@ -4,6 +4,7 @@ import Button from "../Button/Button";
 
 
 const header = props => (
+  <>
   <header className="Header">
     <img src="#" alt="Logo"/>
     <Button 
@@ -11,6 +12,10 @@ const header = props => (
         clicked={props.clicked} 
         action="toggle-menu" />
   </header>
+  <div>
+    <h1>witaj {props.userData.username}</h1>
+  </div>
+  </>
 );
 
 header.propTypes = {

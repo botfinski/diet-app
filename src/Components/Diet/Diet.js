@@ -13,12 +13,12 @@ const diet = props => {
 
   return (
     <div className="Diet">
-      <Header clicked={props.handleButtonClicks} menuOpened={props.menuOpened} />
+      <Header clicked={props.handleButtonClicks} menuOpened={props.menuOpened} userData={props.userData} />
       <DataDisplay
         foodList={props.foodList}
         // nutritionData={props.nutritionData}
         nutritionsNames={props.nutritionsNames}
-        data={props.data}
+        total={props.total}
         userData={props.userData}
       />
       {/* <Chart /> */}

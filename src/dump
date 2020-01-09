@@ -1,0 +1,49 @@
+DietContainer.js
+
+
+    // if (isEmpty(newTotal)) {
+    //   console.log("total empty");
+    //   // console.log(this.state.foodList);
+    //   // this.setState({total: ...this.state.foodList});
+    //   newTotal = { ...newfoodList };
+    // } else {
+    //   console.log("total not empty");
+    //   let s = { ...newTotal };
+    //   // console.log(sumObjectsByKey(newTotal, newfoodList));
+
+    //   newTotal = sumObjectsByKey(s);
+    // }
+
+    // let today = new Date();
+    // let dd = String(today.getDate()).padStart(2, '0');
+    // let mm = String(today.getMonth() + 1).padStart(2, '0');
+    // let yyyy = today.getFullYear();
+
+    // today = mm + '/' + dd + '/' + yyyy;
+
+    // console.log(newFood);
+
+    // localStorage.setItem('food', JSON.stringify(newfoodList));
+
+    // let a = {
+    //   name: "aa",
+    //   kcal: 3123123,
+    //   protein: 1231123,
+    //   carbohydrates: 123123,
+    //   sugar: 123123123,
+    //   fat: 12312,
+    //   saturated: 313,
+    //   salt: 123,
+    //   date: 1576940375062
+    // };
+    // let b = {
+    //   name: "bb",
+    //   kcal: 3123123,
+    //   protein: 1231123,
+    //   carbohydrates: 123123,
+    //   sugar: 123123123,
+    //   fat: 12312,
+    //   saturated: 313,
+    //   salt: 123,
+    //   date: 1576940375062
+    // };
