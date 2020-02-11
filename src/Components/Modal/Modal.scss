@@ -1,4 +1,4 @@
-@import '../global.scss';
+@import "../global.scss";
 
 .Modal {
   display: none;
@@ -9,6 +9,7 @@
   background: white;
   width: calc(100% - 40px);
   height: calc(100% - 40px);
+  padding: 10px;
 
   &.visible {
     display: block;
@@ -19,15 +20,15 @@
   }
 
   form {
-    padding: 10px;
-
     input {
+      margin-bottom: 10px;
       width: 100%;
       min-height: 45px;
     }
   }
 
   &-Buttons-Container {
+    margin: 0 -10px;
     position: absolute;
     bottom: 0;
     width: 100%;

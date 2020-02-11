@@ -1,60 +1,177 @@
 import React, { Component } from "react";
-import DietContainer from "./Containers/DietContainer/DietContainer";
+// import DietContainer from "./Containers/DietContainer/DietContainer";
+import Button from "./Components/Button/Button";
+import Backdrop from "./Components/Backdrop/Backdrop";
+import Modal from "./Components/Modal/Modal";
 
 class App extends Component {
   state = {
-    appData: {
-      userData: {
-        username: "Pan Filip",
-        weight: 82,
-        heigth: 195,
-        nutritions: {
-          kcal: 2000,
-          protein: 0,
-          carbohydrates: 0,
-          sugar: 0,
-          fat: 0,
-          saturated: 0,
-          salt: 0
-        }
-      },
-      modes: {
-        none: [1.2, 1.5],
-        mass: [2.2, 2.5],
-        reduction: [1.8, 2.4],
-        reduction_workout: [2.3, 3.1]
-      },
-      selected_mode: "none"
-    }
+    foodList: null,
+    lastUpdate: null,
+    todayTotal: {
+      kcal: 0,
+      protein: 0,
+      carbohydrates: 0,
+      sugar: 0,
+      fat: 0,
+      saturated: 0,
+      salt: 0
+    },
+    modalOpened: false
   };
 
+  componentDidMount() {
+    let lastUpdate = localStorage.getItem("lastUpdate");
 
-  
-  calculateProteins = this.calculateProteins.bind(this);
-  calculateProteins(e) {
-    let s = this.state.appData;
+    if (!lastUpdate) {
+      lastUpdate = Date.now();
+      localStorage.setItem("lastUpdate", lastUpdate);
+    }
 
-
-    let baseValue = s.userData.weight,
-      minValue = s.userData.weight * s.modes[s.selected_mode][0],
-      maxValue = s.userData.weight * s.modes[s.selected_mode][1]
-
-    console.log(Math.floor(baseValue * 100) / 100)
-    console.log(Math.floor(minValue * 100) / 100)
-    console.log(Math.floor(maxValue * 100) / 100)
+    this.setState({ lastUpdate });
   }
 
-  componentDidMount() {
-    console.log(this.state.appData.userData.nutritions);
+  addNutrition = this.addNutrition.bind(this);
+  addNutrition(data) {
+    console.log("%c addNutrition()", "background: #222; color: #bada55");
+    // console.log(data);
 
-    this.calculateProteins();
+    // console.log(data);
+
+    this.toggleModal();
+
+    // let newFood = { ...data, date: Date.now() },
+    //   // newfoodList = { ...this.state.foodList },
+    //   newTotal = { ...this.state.todayTotal };
+    // // prop = Date.now().toString();
+    // // newfoodList[prop] = newFood;
+
+    // // console.log(newfoodList);
+    // // console.log(newTotal);
+
+    // function sumObjectsByKey(...objs) {
+    //   console.log(...objs);
+    //   return objs.reduce((a, b) => {
+    //     for (let k in b) {
+    //       if (typeof b[k] === "number") {
+    //         if (b.hasOwnProperty(k)) a[k] = (a[k] || 0) + b[k];
+    //       }
+    //     }
+    //     return a;
+    //   }, {});
+    // }
+
+    // // console.log(sumObjectsByKey(newFood, newTotal));
+    // sumObjectsByKey(newFood, newTotal);
+
+    // this.setState({
+    //   // foodList: newfoodList
+    //   // total: newTotal
+    // });
+  }
+
+  toggleModal = this.toggleModal.bind(this);
+  toggleModal(e) {
+    let form = document.querySelector("#add-food-form");
+
+    form.reset();
+
+    this.setState(prevState => ({
+      modalOpened: !prevState.modalOpened
+    }));
+  }
+
+  handleButtonClicks = this.handleButtonClicks.bind(this);
+  handleButtonClicks(e) {
+    if (e.target.nodeName === "BUTTON") {
+      let action;
+
+      if (e.target.dataset.action.search("-") > 0) {
+        let names = e.target.dataset.action.split("-");
+        names[1] = names[1].charAt(0).toUpperCase() + names[1].slice(1);
+
+        action = names.join("");
+      } else {
+        action = e.target.dataset.action;
+      }
+
+      if (typeof this[action] !== "undefined") {
+        this[action](e);
+      } else {
+        console.error("No function to call: %c" + action, "background: #222; color: #ff0000");
+        return;
+      }
+    }
   }
 
   render() {
-    return <DietContainer 
-      data={this.state.appData}
-    />;
+    return (
+      <>
+        <p>{this.state.lastUpdate}</p>
+        <Button className="add-food-button" clicked={this.handleButtonClicks} textContent="+" action="toggle-modal" />
+        <Backdrop showBackdrop={this.state.modalOpened}>
+          <Modal
+            modalOpened={this.state.modalOpened}
+            clicked={this.handleButtonClicks}
+            addNutrition={this.addNutrition}
+          />
+        </Backdrop>
+      </>
+    );
   }
 }
 
 export default App;
+
+// class App extends Component {
+//   state = {
+//     appData: {
+//       userData: {
+//         username: "Pan Filip",
+//         weight: 82,
+//         heigth: 195,
+//         nutritions: {
+//           kcal: 2000,
+//           protein: 0,
+//           carbohydrates: 0,
+//           sugar: 0,
+//           fat: 0,
+//           saturated: 0,
+//           salt: 0
+//         }
+//       },
+//       modes: {
+//         none: [1.2, 1.5],
+//         mass: [2.2, 2.5],
+//         reduction: [1.8, 2.4],
+//         reduction_workout: [2.3, 3.1]
+//       },
+//       selected_mode: "none"
+//     }
+//   };
+
+//   calculateProteins = this.calculateProteins.bind(this);
+//   calculateProteins(e) {
+//     let s = this.state.appData;
+
+//     let baseValue = s.userData.weight,
+//       minValue = s.userData.weight * s.modes[s.selected_mode][0],
+//       maxValue = s.userData.weight * s.modes[s.selected_mode][1];
+
+//     console.log(Math.floor(baseValue * 100) / 100);
+//     console.log(Math.floor(minValue * 100) / 100);
+//     console.log(Math.floor(maxValue * 100) / 100);
+//   }
+
+//   componentDidMount() {
+//     console.log(this.state.appData.userData.nutritions);
+
+//     this.calculateProteins();
+//   }
+
+//   render() {
+//     return <DietContainer data={this.state.appData} />;
+//   }
+// }
+
+// export default App;

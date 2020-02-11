@@ -3,7 +3,7 @@ import "./Button.scss";
 
 const button = props => (
   <button
-    type="button"
+    type={props.type ? props.type : "button"}
     className={props.className ? "Button " + props.className : "Button"}
     onClick={props.clicked}
     data-action={props.action}

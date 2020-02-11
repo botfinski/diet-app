@@ -20,6 +20,7 @@ class Modal extends Component {
 
   resetFoodObject = this.resetFoodObject.bind(this);
   resetFoodObject() {
+    console.log("reset");
     let tempObj = { ...this.state.foodData };
 
     Object.keys(tempObj).map(key => {
@@ -51,6 +52,7 @@ class Modal extends Component {
 
   handleForm = this.handleForm.bind(this);
   handleForm(e) {
+    console.log("handleForm");
     let tempObj = { ...this.state.foodData },
       fields = [...document.querySelectorAll("input")];
 
@@ -63,6 +65,7 @@ class Modal extends Component {
 
   showErrors = this.showErrors.bind(this);
   showErrors(errors) {
+    console.log(errors);
     let fields = [...document.querySelectorAll("input")];
 
     fields.map(field => {
@@ -75,31 +78,36 @@ class Modal extends Component {
   }
 
   validateForm = this.validateForm.bind(this);
-  validateForm() {
+  validateForm(e) {
+    e.preventDefault();
+
     let formData = Object.values(this.state.foodData),
       errors = [];
 
+    console.log(this.state.foodData);
+
     if (!formData.includes(0) && !formData.includes("")) {
-      this.setState({ formValid: true });
       this.props.addNutrition(this.state.foodData);
       this.resetFoodObject();
+      this.setState({ formValid: true });
     } else {
       this.setState({ formValid: false });
+
+      console.log(this.state.foodData);
 
       for (let key in this.state.foodData) {
         if (!this.state.foodData[key]) {
           errors.push(key);
         }
       }
+      this.showErrors(errors);
     }
-    // this.setState({errors});
-    this.showErrors(errors);
   }
 
   render() {
     return (
       <div className={this.props.modalOpened ? "Modal visible" : "Modal"}>
-        <form id="add-food-form" onChange={this.handleForm} onSubmit={this.handleForm}>
+        <form id="add-food-form" onChange={this.handleForm} onSubmit={this.validateForm}>
           <label htmlFor="name">co tam zajadasz?</label>
           <br />
           <input type="text" id="name" placeholder="wpisz swe danie" autoComplete="off" />
@@ -147,12 +155,12 @@ class Modal extends Component {
           <label htmlFor="salt">sól</label>
           <br />
           <input type="number" id="salt" min="0" max="20000" placeholder="sól" autoComplete="off" />
-        </form>
 
-        <div className="Modal-Buttons-Container Flex Flex-50">
-          <Button textContent="Close" clicked={this.closeModal} action="toggle-modal" />
-          <Button textContent="Add" clicked={this.validateForm} action="add-nutrition" />
-        </div>
+          <div className="Modal-Buttons-Container Flex Flex-50">
+            <Button textContent="Close" clicked={this.closeModal} action="toggle-modal" />
+            <Button textContent="Add" clicked={this.validateForm} action="add-nutrition" type="submit" />
+          </div>
+        </form>
       </div>
     );
   }
