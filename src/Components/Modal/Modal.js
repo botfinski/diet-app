@@ -52,30 +52,42 @@ class Modal extends Component {
 
   handleForm = this.handleForm.bind(this);
   handleForm(e) {
-    console.log("handleForm");
     let tempObj = { ...this.state.foodData },
       fields = [...document.querySelectorAll("input")];
-
     fields.map(field => {
       return field.type === "number" ? (tempObj[field.id] = Number(field.value)) : (tempObj[field.id] = field.value);
     });
-
     this.setState({ foodData: tempObj });
   }
 
-  showErrors = this.showErrors.bind(this);
-  showErrors(errors) {
-    console.log(errors);
-    let fields = [...document.querySelectorAll("input")];
+  // showErrors = this.showErrors.bind(this);
+  // showErrors(errors) {
+  //   console.log(errors);
+  //   let fields = [...document.querySelectorAll("input")];
 
-    fields.map(field => {
-      if (errors.includes(field.id)) {
-        return field.classList.add("error");
-      } else {
-        return field.classList.remove("error");
-      }
-    });
-  }
+  //   fields.map(field => {
+  //     if (errors.includes(field.id)) {
+  //       return field.classList.add("error");
+  //     } else {
+  //       return field.classList.remove("error");
+  //     }
+  //   });
+  // }
+
+  handleErrors = {
+    show: errors => {
+      console.log(errors);
+      let fields = [...document.querySelectorAll("input")];
+
+      fields.map(field => {
+        if (errors.includes(field.id)) {
+          return field.classList.add("error");
+        } else {
+          return field.classList.remove("error");
+        }
+      });
+    }
+  };
 
   validateForm = this.validateForm.bind(this);
   validateForm(e) {
@@ -84,24 +96,40 @@ class Modal extends Component {
     let formData = Object.values(this.state.foodData),
       errors = [];
 
-    console.log(this.state.foodData);
+    // console.log(formData);
 
-    if (!formData.includes(0) && !formData.includes("")) {
-      this.props.addNutrition(this.state.foodData);
-      this.resetFoodObject();
-      this.setState({ formValid: true });
-    } else {
-      this.setState({ formValid: false });
-
-      console.log(this.state.foodData);
+    if (formData.includes(0) || formData.includes("")) {
+      console.log("jest zero/pusto");
+      // console.log(this.state.foodData);
 
       for (let key in this.state.foodData) {
         if (!this.state.foodData[key]) {
           errors.push(key);
         }
+
+        this.handleErrors.show(errors);
       }
-      this.showErrors(errors);
+    } else {
+      console.log("nie ma zera");
+      errors = [];
     }
+
+    console.log(errors);
+
+    // if (!formData.includes(0) && !formData.includes("")) {
+    //   this.props.addNutrition(this.state.foodData);
+    //   this.setState({ formValid: true });
+    //   this.resetFoodObject();
+    // } else {
+    //   this.setState({ formValid: false });
+
+    //   for (let key in this.state.foodData) {
+    //     if (!this.state.foodData[key]) {
+    //       errors.push(key);
+    //     }
+    //   }
+    //   this.showErrors(errors);
+    // }
   }
 
   render() {
