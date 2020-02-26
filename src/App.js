@@ -21,6 +21,7 @@ class App extends Component {
   };
 
   componentDidMount() {
+    this.dupa();
     let lastUpdate = localStorage.getItem("lastUpdate");
 
     if (!lastUpdate) {
@@ -102,6 +103,115 @@ class App extends Component {
         return;
       }
     }
+  }
+
+  dupa = this.dupa.bind(this);
+  dupa(e) {
+    let massages = [
+      {
+        name: "111",
+        date: "01-01-2020"
+      },
+      {
+        name: "222",
+        date: "01-01-2020"
+      },
+      {
+        name: "333",
+        date: "01-01-2020"
+      },
+      {
+        name: "444",
+        date: "01-01-2020"
+      },
+      {
+        name: "555",
+        date: "01-01-2020"
+      },
+      {
+        name: "666",
+        date: "01-01-2020"
+      },
+      {
+        name: "7777",
+        date: "01-01-2020"
+      },
+      {
+        name: "888",
+        date: "01-01-2020"
+      },
+      {
+        name: "999",
+        date: "01-01-2020"
+      },
+      {
+        name: "10000",
+        date: "01-01-2020"
+      },
+      {
+        name: "aaa11",
+        date: "02-01-2020"
+      },
+      {
+        name: "aaa222",
+        date: "02-01-2020"
+      },
+      {
+        name: "aaa333",
+        date: "02-01-2020"
+      },
+      {
+        name: "aaa444",
+        date: "02-01-2020"
+      },
+      {
+        name: "aaa5555",
+        date: "02-01-2020"
+      },
+      {
+        name: "aaa666",
+        date: "02-01-2020"
+      },
+      {
+        name: "aaa777",
+        date: "03-01-2020"
+      },
+      {
+        name: "aaacsdfsd",
+        date: "03-01-2020"
+      },
+      {
+        name: "aaasdfsdf",
+        date: "03-01-2020"
+      },
+      {
+        name: "aaasdfsdf",
+        date: "03-01-2020"
+      },
+      {
+        name: "aaasdfsf",
+        date: "03-01-2020"
+      }
+    ];
+
+    let dates = new Set(massages.map(massage => massage.date));
+
+    const createList = () => {
+      console.log(dates);
+      console.log(massages);
+
+      let splited = [];
+
+      dates.forEach(date => {
+        let temp = massages.filter(massage => massage.date === date);
+
+        splited.push(temp);
+      });
+
+      console.log(splited);
+    };
+
+    createList();
   }
 
   render() {
